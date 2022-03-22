@@ -4,10 +4,15 @@ services:
 
   php-apache:
     image: php:7.4.8-apache
-    restart: 'always'
+     build: 
+      context: .
+      dockerfile: ApacheDockerFile.dockerfile
+    restart: unless-stopped
     ports:
     - 80:80
     - 443:443
+    links:
+    - postgres
     volumes:
     - ./www/html:/var/www/html
     - ./config/php:/usr/local/etc/php/
