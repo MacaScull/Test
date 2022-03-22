@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+
+  php-apache:
+    image: php:7.4.8-apache
+    restart: 'always'
+    ports:
+    - 80:80
+    - 443:443
+    volumes:
+    - ./www/html:/var/www/html
+    - ./config/php:/usr/local/etc/php/
+    - ./logs/apache2:/var/log/apache2
+
+  application:
+    container_name: application
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 3001:3000 
+    
+  
